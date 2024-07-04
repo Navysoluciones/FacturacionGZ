@@ -26,5 +26,8 @@
     <Setting Name="contraseña" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FacturacionGZ_WSCLIENTE_RegistrationSOAP" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://facturacion.finkok.com/servicios/soap/registration</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

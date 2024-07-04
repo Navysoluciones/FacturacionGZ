@@ -145,6 +145,16 @@ Namespace My
                 Me("contraseña") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.WebServiceUrl),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://facturacion.finkok.com/servicios/soap/registration")>  _
+        Public ReadOnly Property FacturacionGZ_WSCLIENTE_RegistrationSOAP() As String
+            Get
+                Return CType(Me("FacturacionGZ_WSCLIENTE_RegistrationSOAP"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

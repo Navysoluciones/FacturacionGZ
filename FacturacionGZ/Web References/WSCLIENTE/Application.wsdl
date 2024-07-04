@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://facturacion.finkok.com/registration" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s0="apps.services.soap.core.views" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xop="http://www.w3.org/2004/08/xop/include" name="Application" targetNamespace="http://facturacion.finkok.com/registration" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="apps.services.soap.core.views">
+      <xs:complexType name="AssingResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="success" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="credit" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RegistrationListResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="users" nillable="true" type="s0:ResellerUserArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CustomersResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="users" nillable="true" type="s0:ResellerUserArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResellerUserArray">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ResellerUser" nillable="true" type="s0:ResellerUser" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResellerUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="counter" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="taxpayer_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="credit" nillable="true" type="xs:integer" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SwitchResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="success" nillable="true" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RegistrationResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="success" nillable="true" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RegistrationResult" type="s0:RegistrationResult" />
+      <xs:element name="SwitchResult" type="s0:SwitchResult" />
+      <xs:element name="ResellerUser" type="s0:ResellerUser" />
+      <xs:element name="ResellerUserArray" type="s0:ResellerUserArray" />
+      <xs:element name="CustomersResult" type="s0:CustomersResult" />
+      <xs:element name="RegistrationListResult" type="s0:RegistrationListResult" />
+      <xs:element name="AssingResult" type="s0:AssingResult" />
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://facturacion.finkok.com/registration">
+      <xs:import namespace="apps.services.soap.core.views" />
+      <xs:complexType name="edit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="reseller_username" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="reseller_password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="taxpayer_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="cer" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="key" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="passphrase" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customersResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="customersResult" nillable="true" type="s0:CustomersResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="assign">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+          <xs:element name="taxpayer_id" type="xs:string" />
+          <xs:element minOccurs="0" name="credit" nillable="true" type="tns:assign_creditType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="get">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="reseller_username" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="reseller_password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="taxpayer_id" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="add">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="reseller_username" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="reseller_password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="taxpayer_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="type_user" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="coupon" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="added" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="cer" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="key" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="passphrase" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="assignResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="assignResult" nillable="true" type="s0:AssingResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="getResult" nillable="true" type="s0:RegistrationListResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="assign_creditType">
+        <xs:restriction base="xs:nonNegativeInteger">
+          <xs:minExclusive value="0" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="switch">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+          <xs:element name="taxpayer_id" type="xs:string" />
+          <xs:element minOccurs="0" name="type_user" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="editResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="editResult" nillable="true" type="s0:RegistrationResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customers">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+          <xs:element name="page" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="switchResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="switchResult" nillable="true" type="s0:SwitchResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="addResult" nillable="true" type="s0:RegistrationResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="addResponse" type="tns:addResponse" />
+      <xs:element name="switchResponse" type="tns:switchResponse" />
+      <xs:element name="customers" type="tns:customers" />
+      <xs:element name="editResponse" type="tns:editResponse" />
+      <xs:element name="switch" type="tns:switch" />
+      <xs:element name="getResponse" type="tns:getResponse" />
+      <xs:element name="assignResponse" type="tns:assignResponse" />
+      <xs:element name="add" type="tns:add" />
+      <xs:element name="get" type="tns:get" />
+      <xs:element name="assign" type="tns:assign" />
+      <xs:element name="customersResponse" type="tns:customersResponse" />
+      <xs:element name="edit" type="tns:edit" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="customers">
+    <wsdl:part name="customers" element="tns:customers" />
+  </wsdl:message>
+  <wsdl:message name="customersResponse">
+    <wsdl:part name="customersResponse" element="tns:customersResponse" />
+  </wsdl:message>
+  <wsdl:message name="get">
+    <wsdl:part name="get" element="tns:get" />
+  </wsdl:message>
+  <wsdl:message name="getResponse">
+    <wsdl:part name="getResponse" element="tns:getResponse" />
+  </wsdl:message>
+  <wsdl:message name="edit">
+    <wsdl:part name="edit" element="tns:edit" />
+  </wsdl:message>
+  <wsdl:message name="editResponse">
+    <wsdl:part name="editResponse" element="tns:editResponse" />
+  </wsdl:message>
+  <wsdl:message name="switch">
+    <wsdl:part name="switch" element="tns:switch" />
+  </wsdl:message>
+  <wsdl:message name="switchResponse">
+    <wsdl:part name="switchResponse" element="tns:switchResponse" />
+  </wsdl:message>
+  <wsdl:message name="add">
+    <wsdl:part name="add" element="tns:add" />
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part name="addResponse" element="tns:addResponse" />
+  </wsdl:message>
+  <wsdl:message name="assign">
+    <wsdl:part name="assign" element="tns:assign" />
+  </wsdl:message>
+  <wsdl:message name="assignResponse">
+    <wsdl:part name="assignResponse" element="tns:assignResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Application">
+    <wsdl:operation name="customers" parameterOrder="customers">
+      <wsdl:documentation>This function lists all the user of the account.</wsdl:documentation>
+      <wsdl:input name="customers" message="tns:customers" />
+      <wsdl:output name="customersResponse" message="tns:customersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="get" parameterOrder="get">
+      <wsdl:documentation>This function returns the customer information (status, stamps consumed in the current month, remaining stamps that are prepaid)</wsdl:documentation>
+      <wsdl:input name="get" message="tns:get" />
+      <wsdl:output name="getResponse" message="tns:getResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="edit" parameterOrder="edit">
+      <wsdl:documentation>This function is in charge of editing an account, it will only be used by the resellers</wsdl:documentation>
+      <wsdl:input name="edit" message="tns:edit" />
+      <wsdl:output name="editResponse" message="tns:editResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="switch" parameterOrder="switch">
+      <wsdl:documentation>This function updates the type to ResellerUser</wsdl:documentation>
+      <wsdl:input name="switch" message="tns:switch" />
+      <wsdl:output name="switchResponse" message="tns:switchResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="add" parameterOrder="add">
+      <wsdl:documentation>This function is in charge of adding a new user under the reseller, it will only be used by the resellers</wsdl:documentation>
+      <wsdl:input name="add" message="tns:add" />
+      <wsdl:output name="addResponse" message="tns:addResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="assign" parameterOrder="assign">
+      <wsdl:documentation>This function added credit to Reselleruser</wsdl:documentation>
+      <wsdl:input name="assign" message="tns:assign" />
+      <wsdl:output name="assignResponse" message="tns:assignResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Application" type="tns:Application">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="customers">
+      <soap:operation soapAction="customers" style="document" />
+      <wsdl:input name="customers">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="customersResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get">
+      <soap:operation soapAction="get" style="document" />
+      <wsdl:input name="get">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="edit">
+      <soap:operation soapAction="edit" style="document" />
+      <wsdl:input name="edit">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="editResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="switch">
+      <soap:operation soapAction="switch" style="document" />
+      <wsdl:input name="switch">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="switchResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="add">
+      <soap:operation soapAction="add" style="document" />
+      <wsdl:input name="add">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="assign">
+      <soap:operation soapAction="assign" style="document" />
+      <wsdl:input name="assign">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="assignResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegistrationSOAP">
+    <wsdl:port name="Application" binding="tns:Application">
+      <soap:address location="https://facturacion.finkok.com/servicios/soap/registration" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

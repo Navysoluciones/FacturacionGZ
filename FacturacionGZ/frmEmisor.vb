@@ -14,6 +14,8 @@ Imports Org.BouncyCastle.OpenSsl
 Imports Org.BouncyCastle.Utilities.Collections
 Imports Org.BouncyCastle.Crypto.Parameters
 Imports System.Net.Mail
+Imports System.Net
+
 Public Class frmEmisor
 
     Dim LEMI As New List(Of String)
@@ -545,7 +547,7 @@ Public Class frmEmisor
     End Sub
 
     Private Sub Button6_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
- 
+
     End Sub
 
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -674,4 +676,77 @@ Public Class frmEmisor
         System.IO.File.WriteAllBytes(txtRutaCER.Text & "PFX.pfx", Sign.CrearPFX(bytesCer, bytesKey, txtPassword.Text))
         txtRutaPfx.Text = txtRutaCER.Text & "PFX.pfx"
     End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        AgregaClienteNS(CBRFC.Text, My.Settings.USUNS, My.Settings.PWDNS)
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        ActivaClienteNS(CBRFC.Text, My.Settings.USUNS, My.Settings.PWDNS, "A")
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        ActivaClienteNS(CBRFC.Text, My.Settings.USUNS, My.Settings.PWDNS, "S")
+    End Sub
+    Public Function AgregaClienteNS(ByVal rfc As String, ByVal user As String, ByVal pass As String)
+        Cursor = Cursors.WaitCursor
+        Try
+
+            '4.0
+            'ServicePointManager.Expect100Continue = True
+            'ServicePointManager.SecurityProtocol = CType(3072, SecurityProtocolType)
+            'ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+            '4.5
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
+            Dim WSAgrega As New WSCLIENTE.add 'Hacemos el llamado al metodo
+            WSAgrega.reseller_username = user
+            WSAgrega.reseller_password = pass
+            WSAgrega.taxpayer_id = rfc 'RFC emisor que agregaremos
+
+            Dim response As New WSCLIENTE.addResponse
+            Dim agrega As New WSCLIENTE.RegistrationSOAP
+
+            response = agrega.add(WSAgrega)
+            MsgBox("Cliente Agregado Exitósamente")
+
+        Catch ex As Exception
+            MsgBox("No se Agregó el cliente por: " & ex.Message)
+            Cursor = Cursors.Default
+            Return 0
+        End Try
+        Cursor = Cursors.Default
+        Return 0
+    End Function
+    Public Function ActivaClienteNS(ByVal rfc As String, ByVal user As String, ByVal pass As String, ByVal status As String)
+        Try
+
+            '4.0
+            ServicePointManager.Expect100Continue = True
+            ServicePointManager.SecurityProtocol = CType(3072, SecurityProtocolType)
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+            '4.5
+            'ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            Dim WSModifica As New WSCLIENTE.edit
+            WSModifica.reseller_username = user
+            WSModifica.reseller_password = pass
+            WSModifica.taxpayer_id = rfc
+            WSModifica.status = status
+            Dim response As New WSCLIENTE.editResponse
+            Dim agrega As New WSCLIENTE.RegistrationSOAP
+            If WSModifica.status = "s" Or WSModifica.status = "S" Then
+                response = agrega.edit(WSModifica)
+                MsgBox("Cliente suspendido Exitosamente")
+            ElseIf WSModifica.status = "a" Or WSModifica.status = "A" Then
+                response = agrega.edit(WSModifica)
+                MsgBox("Cliente Activado Exitosamente")
+            Else
+                MsgBox("Este metodo solo acepta estatus A o S ")
+            End If
+        Catch ex As Exception
+            MsgBox("No se modificó el status del cliente " & ex.Message)
+            Return 0
+        End Try
+        Return 0
+    End Function
 End Class

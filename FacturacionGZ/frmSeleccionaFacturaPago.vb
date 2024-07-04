@@ -27,7 +27,7 @@
             Exit Sub
         End If
         Dim QUERY As String
-        QUERY = "SELECT F.RFCEMISOR,F.SERIE,F.FOLIO,F.RFCCLIENTE,F.FECHA,F.TOTAL,F.UUID,MARCAR=CONVERT(BIT,0) FROM FACTURAS F WHERE RFCEMISOR='" + EMI + "' AND RFCCLIENTE='" + CLI + "' AND ESTADO=2 AND VCFD='3.3' AND NMETODOPAGO ='PPD'"
+        QUERY = "SELECT F.RFCEMISOR,F.SERIE,F.FOLIO,F.RFCCLIENTE,F.FECHA,F.TOTAL,F.UUID,MARCAR=CONVERT(BIT,0) FROM VFACTURASPPD F WHERE RFCEMISOR='" + EMI + "' AND RFCCLIENTE='" + CLI + "'"
         DGV.DataSource = LLENATABLA(QUERY, frmPrincipal.CadenaConexion)
         DGV.Columns(0).ReadOnly = True
         DGV.Columns(1).ReadOnly = True
@@ -38,7 +38,7 @@
         DGV.Columns(6).ReadOnly = True
         DGV.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         If DGV.Rows.Count <= 0 Then
-            MessageBox.Show("El cliente no cuenta con facturas a crédito realizadas con versión 3.3", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("El cliente no cuenta con facturas a crédito realizadas con versión 3.3 o superior dentro del año anterior", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.DialogResult = Windows.Forms.DialogResult.No
             Me.Close()
         End If
